@@ -52,10 +52,20 @@ func matchLine(line []byte, pattern string) (bool, error) {
 		pattern = "1234567890qwertyiuopasdfghjklzxcvbnmQWERTYIUOPASDFGHJKLZXCVBNM_"
 
 	} else if strings.HasPrefix(pattern, "[") && strings.HasSuffix(pattern, "]") {
+		if string(pattern[1]) == "^" {
+			pattern = pattern[2 : len(pattern)-1]
+			return negativeCharactorGroup(line, pattern)
+		}
+
 		pattern = pattern[1 : len(pattern)-1]
 	}
 
 	ok = bytes.ContainsAny(line, pattern)
 
 	return ok, nil
+}
+
+func negativeCharactorGroup(line []byte, pattern string) (bool, error) {
+	ok := bytes.ContainsAny(line, pattern)
+	return !ok, nil
 }
