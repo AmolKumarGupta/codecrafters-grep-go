@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 	"unicode/utf8"
 )
 
@@ -49,6 +50,9 @@ func matchLine(line []byte, pattern string) (bool, error) {
 
 	} else if pattern == "\\w" {
 		pattern = "1234567890qwertyiuopasdfghjklzxcvbnmQWERTYIUOPASDFGHJKLZXCVBNM_"
+
+	} else if strings.HasPrefix(pattern, "[") && strings.HasSuffix(pattern, "]") {
+		pattern = pattern[1 : len(pattern)-1]
 	}
 
 	ok = bytes.ContainsAny(line, pattern)
