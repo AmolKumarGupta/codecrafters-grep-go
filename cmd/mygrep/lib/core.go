@@ -84,7 +84,7 @@ func MatchLine(line []byte, pattern string) (bool, error) {
 		matcher.Ptr.PatternL++
 	}
 
-	if matcher.Ptr.PatternL < matcher.Ptr.PatternR {
+	if matcher.Ptr.PatternL <= matcher.Ptr.PatternR {
 		return false, nil
 	}
 
