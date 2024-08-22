@@ -2,12 +2,13 @@ package main
 
 import (
 	// Uncomment this to pass the first stage
-	"bytes"
+
 	"fmt"
 	"io"
 	"os"
-	"strings"
 	"unicode/utf8"
+
+	"github.com/codecrafters-io/grep-starter-go/cmd/mygrep/lib"
 )
 
 // Usage: echo <input_text> | your_program.sh -E <pattern>
@@ -43,29 +44,31 @@ func matchLine(line []byte, pattern string) (bool, error) {
 		return false, fmt.Errorf("unsupported pattern: %q", pattern)
 	}
 
-	var ok bool
+	return lib.MatchLine(line, pattern)
 
-	if pattern == "\\d" {
-		pattern = "1234567890"
+	// var ok bool
 
-	} else if pattern == "\\w" {
-		pattern = "1234567890qwertyiuopasdfghjklzxcvbnmQWERTYIUOPASDFGHJKLZXCVBNM_"
+	// if pattern == "\\d" {
+	// 	pattern = "1234567890"
 
-	} else if strings.HasPrefix(pattern, "[") && strings.HasSuffix(pattern, "]") {
-		if string(pattern[1]) == "^" {
-			pattern = pattern[2 : len(pattern)-1]
-			return negativeCharactorGroup(line, pattern)
-		}
+	// } else if pattern == "\\w" {
+	// 	pattern = "1234567890qwertyiuopasdfghjklzxcvbnmQWERTYIUOPASDFGHJKLZXCVBNM_"
 
-		pattern = pattern[1 : len(pattern)-1]
-	}
+	// } else if strings.HasPrefix(pattern, "[") && strings.HasSuffix(pattern, "]") {
+	// 	if string(pattern[1]) == "^" {
+	// 		pattern = pattern[2 : len(pattern)-1]
+	// 		return negativeCharactorGroup(line, pattern)
+	// 	}
 
-	ok = bytes.ContainsAny(line, pattern)
+	// 	pattern = pattern[1 : len(pattern)-1]
+	// }
 
-	return ok, nil
+	// ok = bytes.ContainsAny(line, pattern)
+
+	// return ok, nil
 }
 
-func negativeCharactorGroup(line []byte, pattern string) (bool, error) {
-	ok := bytes.ContainsAny(line, pattern)
-	return !ok, nil
-}
+// func negativeCharactorGroup(line []byte, pattern string) (bool, error) {
+// 	ok := bytes.ContainsAny(line, pattern)
+// 	return !ok, nil
+// }
