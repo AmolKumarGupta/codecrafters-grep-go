@@ -46,12 +46,14 @@ func MatchLine(line []byte, pattern string) (bool, error) {
 
 		if digit.Matches(&matcher) {
 			if !digit.Run(&matcher) {
-				return false, fmt.Errorf("no pattern found: %q", "\\d")
+				matcher.Ptr.LineL++
+				continue
 			}
 
 		} else if word.Matches(&matcher) {
 			if !word.Run(&matcher) {
-				return false, fmt.Errorf("no pattern found: %q", "\\w")
+				matcher.Ptr.LineL++
+				continue
 			}
 
 		} else if negativeCharGrp.Matches(&matcher) {
@@ -66,7 +68,8 @@ func MatchLine(line []byte, pattern string) (bool, error) {
 
 		} else if start.Matches(&matcher) {
 			if !start.Run(&matcher) {
-				return false, fmt.Errorf("no pattern found: %q", pattern)
+				matcher.Ptr.LineL++
+				continue
 			}
 
 		} else {
