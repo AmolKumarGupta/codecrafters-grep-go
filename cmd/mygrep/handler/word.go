@@ -26,10 +26,11 @@ func (d Word) Matches(app *app.App) bool {
 func (d Word) Run(app *app.App) bool {
 	letter := "1234567890qwertyiuopasdfghjklzxcvbnmQWERTYIUOPASDFGHJKLZXCVBNM_"
 
-	if strings.ContainsAny(letter, string(app.Line[app.Ptr.LineL])) {
-		app.Ptr.LineL++
-		return true
-	}
+	return strings.ContainsAny(letter, string(app.Line[app.Ptr.LineL]))
+	// if strings.ContainsAny(letter, string(app.Line[app.Ptr.LineL])) {
+	// 	app.Ptr.LineL++
+	// 	return true
+	// }
 
-	return false
+	// return false
 }
