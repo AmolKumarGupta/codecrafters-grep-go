@@ -28,6 +28,12 @@ func MatchLine(line []byte, pattern string) (bool, error) {
 		curLine := matcher.Line[matcher.Ptr.LineL]
 
 		if cur == '\\' {
+			if matcher.Ptr.PatternL < matcher.Ptr.PatternR && matcher.Pattern[matcher.Ptr.PatternL+1] == '\\' {
+				if curLine != '\\' {
+					return false, nil
+				}
+			}
+
 			matcher.Ptr.PatternL++
 			continue
 		}
@@ -76,6 +82,10 @@ func MatchLine(line []byte, pattern string) (bool, error) {
 		}
 
 		matcher.Ptr.PatternL++
+	}
+
+	if matcher.Ptr.PatternL < matcher.Ptr.PatternR {
+		return false, nil
 	}
 
 	return true, nil

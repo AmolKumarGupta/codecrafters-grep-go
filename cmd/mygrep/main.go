@@ -29,7 +29,7 @@ func main() {
 	ok, err := matchLine(line, pattern)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(1)
+		os.Exit(2)
 	}
 
 	if !ok {

@@ -25,6 +25,7 @@ func (d Digit) Matches(app *app.App) bool {
 }
 
 func (d Digit) Run(app *app.App) bool {
+	// return strings.ContainsAny("0123456789", string(app.Line[app.Ptr.LineL]))
 	if strings.ContainsAny("0123456789", string(app.Line[app.Ptr.LineL])) {
 		app.Ptr.LineL++
 		return true
