@@ -1,8 +1,6 @@
 package lib
 
 import (
-	"fmt"
-
 	"github.com/codecrafters-io/grep-starter-go/cmd/mygrep/app"
 	"github.com/codecrafters-io/grep-starter-go/cmd/mygrep/handler"
 )
@@ -36,7 +34,7 @@ func MatchLine(line []byte, pattern string) (bool, error) {
 
 		if cur == ' ' {
 			if curLine != ' ' {
-				return false, fmt.Errorf("no pattern found: with space")
+				return false, nil
 			}
 
 			matcher.Ptr.LineL++
@@ -58,23 +56,23 @@ func MatchLine(line []byte, pattern string) (bool, error) {
 
 		} else if negativeCharGrp.Matches(&matcher) {
 			if !negativeCharGrp.Run(&matcher) {
-				return false, fmt.Errorf("no pattern found: %q", pattern)
+				return false, nil
 			}
 
 		} else if positiveCharGrp.Matches(&matcher) {
 			if !positiveCharGrp.Run(&matcher) {
-				return false, fmt.Errorf("no pattern found: %q", pattern)
+				return false, nil
 			}
 
 		} else if start.Matches(&matcher) {
 			if !start.Run(&matcher) {
-				return false, fmt.Errorf("no pattern found: %q", pattern)
+				return false, nil
 				// matcher.Ptr.LineL++
 				// continue
 			}
 
 		} else {
-			return false, fmt.Errorf("no pattern found at last: %q", pattern)
+			return false, nil
 		}
 
 		matcher.Ptr.PatternL++

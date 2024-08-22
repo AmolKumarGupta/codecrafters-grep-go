@@ -29,7 +29,7 @@ func main() {
 	ok, err := matchLine(line, pattern)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(2)
+		os.Exit(1)
 	}
 
 	if !ok {
@@ -45,30 +45,4 @@ func matchLine(line []byte, pattern string) (bool, error) {
 	}
 
 	return lib.MatchLine(line, pattern)
-
-	// var ok bool
-
-	// if pattern == "\\d" {
-	// 	pattern = "1234567890"
-
-	// } else if pattern == "\\w" {
-	// 	pattern = "1234567890qwertyiuopasdfghjklzxcvbnmQWERTYIUOPASDFGHJKLZXCVBNM_"
-
-	// } else if strings.HasPrefix(pattern, "[") && strings.HasSuffix(pattern, "]") {
-	// 	if string(pattern[1]) == "^" {
-	// 		pattern = pattern[2 : len(pattern)-1]
-	// 		return negativeCharactorGroup(line, pattern)
-	// 	}
-
-	// 	pattern = pattern[1 : len(pattern)-1]
-	// }
-
-	// ok = bytes.ContainsAny(line, pattern)
-
-	// return ok, nil
 }
-
-// func negativeCharactorGroup(line []byte, pattern string) (bool, error) {
-// 	ok := bytes.ContainsAny(line, pattern)
-// 	return !ok, nil
-// }
