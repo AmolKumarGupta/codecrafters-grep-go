@@ -68,8 +68,9 @@ func MatchLine(line []byte, pattern string) (bool, error) {
 
 		} else if start.Matches(&matcher) {
 			if !start.Run(&matcher) {
-				matcher.Ptr.LineL++
-				continue
+				return false, fmt.Errorf("no pattern found: %q", pattern)
+				// matcher.Ptr.LineL++
+				// continue
 			}
 
 		} else {
