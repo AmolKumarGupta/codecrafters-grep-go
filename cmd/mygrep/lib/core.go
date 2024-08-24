@@ -24,6 +24,7 @@ func MatchLine(line []byte, pattern string) (bool, error) {
 	negativeCharGrp := handler.NegativeCharactorGroup{}
 	startAnchor := handler.StartAnchor{}
 	endAnchor := handler.EndAnchor{}
+	oneOrMore := handler.OneOrMore{}
 
 	for matcher.Ptr.PatternL <= matcher.Ptr.PatternR && matcher.Ptr.LineL <= matcher.Ptr.LineR {
 		cur := matcher.Pattern[matcher.Ptr.PatternL]
@@ -57,6 +58,11 @@ func MatchLine(line []byte, pattern string) (bool, error) {
 
 		} else if startAnchor.Matches(&matcher) {
 			if !startAnchor.Run(&matcher) {
+				return false, nil
+			}
+
+		} else if oneOrMore.Matches(&matcher) {
+			if !oneOrMore.Run(&matcher) {
 				return false, nil
 			}
 
