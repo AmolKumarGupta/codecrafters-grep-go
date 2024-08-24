@@ -26,6 +26,7 @@ func MatchLine(line []byte, pattern string) (bool, error) {
 	endAnchor := handler.EndAnchor{}
 	oneOrMore := handler.OneOrMore{}
 	zeroOrOne := handler.ZeroOrOne{}
+	wildcard := handler.WildCard{}
 
 	for matcher.Ptr.PatternL <= matcher.Ptr.PatternR && matcher.Ptr.LineL <= matcher.Ptr.LineR {
 		cur := matcher.Pattern[matcher.Ptr.PatternL]
@@ -71,6 +72,11 @@ func MatchLine(line []byte, pattern string) (bool, error) {
 			if !zeroOrOne.Run(&matcher) {
 				matcher.Ptr.LineL++
 				continue
+			}
+
+		} else if wildcard.Matches((&matcher)) {
+			if !wildcard.Run(&matcher) {
+				return false, nil
 			}
 
 		} else if digit.Matches(&matcher) {
