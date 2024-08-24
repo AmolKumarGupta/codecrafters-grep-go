@@ -22,8 +22,9 @@ func (a Alternation) Run(app *app.App) bool {
 	raw := app.Pattern[start:app.Ptr.PatternL]
 	searches := strings.Split(raw, "|")
 
+	word := app.Line[app.Ptr.LineL : app.Ptr.LineR+1]
 	for _, search := range searches {
-		if string(app.Line) == search {
+		if string(word) == search {
 			return true
 		}
 	}
